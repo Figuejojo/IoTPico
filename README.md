@@ -1,5 +1,5 @@
-# IoT Pico Health
-This project aims to create an IoT health monitoring device. 
+# IoT Pico
+This project aims to create a IoT project using the Pico W. 
 
 ## About the Project 
 This IoT device contains:
@@ -16,7 +16,7 @@ This IoT device contains:
 ## Project Structure
 
 ```
-Project_Folder
+IoTPico
 ├── pico-sdk (Submodule)
 ├── main.c
 ├── <TBD>
@@ -54,21 +54,21 @@ The following links are the direct download link. You can refer to this [link](h
 First Make sure to have all dependencies installed correctly. If not check the Windows Setup Dependencies section or the references at the end. Then, after everything has been installed correctly do as follows:
 1. Clone the git repository in your desired folder using
 ```shell
-C:\Path\YourProject> git clone https://github.com/Figuejojo/SmartAirPollutionMonitor.git
+> git clone https://github.com/Figuejojo/IoTPico.git
 ```
 2. Get all the submodules clone inside the project, and run the following command inside the Smart Air Pollution Monitor Folder created above:
 ```shell
-C:\Path\YourProject\SmartAirPollutionMonitor> git submodule update --init --recursive
+IoTPico> git submodule update --init --recursive
 ```
-3. Using the ***Developer Command Prompt for VS ...*** use the commands below to move inside the SmartAirPollutionMonitor folder, create a build folder, move to inside it, and generate the cmake files.  
+3. Using the ***Developer Command Prompt for VS ...*** use the commands below to move inside the IoTPico folder, create a build folder, move to inside it, and generate the cmake files.  
 ```shell
-C:\Path\YourProject\SmartAirPollutionMonitor> mkdir build
-C:\Path\YourProject\SmartAirPollutionMonitor> cd build
-C:\Path\YourProject\SmartAirPollutionMonitor\build> cmake -G "NMake Makefiles" ..
-C:\Path\YourProject\SmartAirPollutionMonitor\build> nmake
+IoTPico> mkdir build
+IoTPico> cd build
+IoTPico\build> cmake -G "NMake Makefiles" ..
+IoTPico\build> nmake
 ```
 4. Open Visual Studio Code (VSCode) by typing ***code*** from the ***Developer Command Prompt for VS ...*** (Do not confuse it with the normal command console).
 5. Open the Smart Air Pollution Monitor project folder in VSCode
 6. Choose the GCC arm-none-eabi most recent version (10.3.1 when this was written). If it didn't give you the option click where *No kit* is shown below.
 7. Then click the *Build* button to build the project. If you got any issues please refer to the references section.
-8. Finally if it builds correcly you must see a build folder inside the project with a file named: ```SAPM.uf2```
+8. Finally if it builds correcly you must see a build folder inside the project with a file named: ```IoTPico.uf2```

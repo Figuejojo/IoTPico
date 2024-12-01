@@ -17,20 +17,22 @@ cmake_minimum_required(VERSION 3.13)
 # initialize the SDK directly
 #include(./pico-sdk/pico_sdk_init.cmake)
 set(PICO_SDK_PATH "..\\pico-sdk") 
+#set(PICO_TOOLCHAIN_PATH "..\\picotool")
+
 include(pico_sdk_import.cmake)
 
 set(PICO_BOARD pico_w CACHE STRING "Board type")
 
-project(PicoIoT CXX C ASM)
+project(PicoIoT ASM CXX C)
 
-add_subdirectory(freertos)
+add_subdirectory(FreeRTOS freertos)
 
 # initialize the Raspberry Pi Pico SDK
 pico_sdk_init()
 
 # rest of your project
 add_executable(PicoIoT
-    main.cpp
+    main.c
 )
 
 # Add pico_stdlib library which aggregates commonly used features

@@ -1,6 +1,14 @@
 set(PICO_SDK_FREERTOS_SOURCE FreeRTOS-Kernel)
 
-add_library(freertos
+add_library(freertos)
+
+target_include_directories(freertos PUBLIC
+    .
+    ${PICO_SDK_FREERTOS_SOURCE}/include
+    ${PICO_SDK_FREERTOS_SOURCE}/portable/ThirdParty/GCC/RP2040/include
+)
+
+target_sources(freertos PUBLIC
     ${PICO_SDK_FREERTOS_SOURCE}/event_groups.c
     ${PICO_SDK_FREERTOS_SOURCE}/list.c
     ${PICO_SDK_FREERTOS_SOURCE}/queue.c
@@ -11,11 +19,6 @@ add_library(freertos
     ${PICO_SDK_FREERTOS_SOURCE}/portable/ThirdParty/GCC/RP2040/port.c
 )
 
-target_include_directories(freertos PUBLIC
-    .
-    ${PICO_SDK_FREERTOS_SOURCE}/include
-    ${PICO_SDK_FREERTOS_SOURCE}/portable/ThirdParty/GCC/RP2040/include
-)
 target_link_libraries(freertos PUBLIC
     pico_stdlib 
     hardware_exception

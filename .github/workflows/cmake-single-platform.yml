@@ -45,7 +45,6 @@ jobs:
     - name: PicoTool
       run: |
         git clone https://github.com/raspberrypi/picotool.git;
-        ls;
         export PICO_SDK_PATH="$PWD/pico-sdk";
         echo $PICO_SDK_PATH;
         export PICO_TOOLCHAIN_PATH="$PWD/picotool";
@@ -54,10 +53,6 @@ jobs:
         git submodule update --init --recursive;
         git switch -c 2.0.0;
         git submodule sync --recursive;
-        mkdir build;
-        cd build;
-        cmake ..;
-        make;
         cd ../../
 
     - name: Setup-Build

@@ -38,7 +38,7 @@ jobs:
         ls;
         git submodule update --init
         cd pico-sdk;
-        git checkout 2.0.0;
+        git switch -c 2.0.0;
         ls;
         cd ..;
         git submodule update --init --remote --recursive;
@@ -52,8 +52,8 @@ jobs:
         export PICO_TOOLCHAIN_PATH="$PWD/picotool";
         echo $PICO_TOOLCHAIN_PATH
         cd picotool;
-        git checkout 2.0.0;
-        git submodule update --init lib/mbedtls
+        git switch -c 2.0.0;
+        git submodule update --init --recursive;
         mkdir build;
         cd build;
         cmake ..;

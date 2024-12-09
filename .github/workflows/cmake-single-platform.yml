@@ -36,12 +36,12 @@ jobs:
     - name: Get-Sub-repos
       run: |
         ls;
-        git submodule update --init
+        git submodule update --init --remote --recursive;
         cd pico-sdk;
         git checkout 2.0.0;
-        ls;
-        cd ..;
         git submodule update --init --remote --recursive;
+        cd ..;
+        
 
     - name: PicoTool
       run: |

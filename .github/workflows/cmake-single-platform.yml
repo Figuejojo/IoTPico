@@ -36,20 +36,14 @@ jobs:
     - name: PicoTool
       run: |
         git clone https://github.com/raspberrypi/picotool.git;
-<<<<<<< HEAD
         cd picotool
-=======
->>>>>>> f982939af2f38a124e0bc8719b9ab2e3a2030747
         export PICO_TOOLCHAIN_PATH=".\\picotool";
         git checkout 2.0.0;
         mkdir build;
         cd build;
         cmake ..;
         make;
-<<<<<<< HEAD
         cd ../../
-=======
->>>>>>> f982939af2f38a124e0bc8719b9ab2e3a2030747
 
     - name: Get-Sub-repos
       run: git submodule update --init --remote --recursive

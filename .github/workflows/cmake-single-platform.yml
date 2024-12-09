@@ -36,6 +36,7 @@ jobs:
     - name: Get-Sub-repos
       run: |
         ls;
+        git submodule update --init
         cd pico-sdk;
         git checkout 2.0.0;
         ls;

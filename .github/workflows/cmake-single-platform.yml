@@ -36,12 +36,12 @@ jobs:
     - name: Get-Sub-repos
       run: |
         ls;
-        git submodule update --init --remote --recursive;
+        git submodule update --init
         cd pico-sdk;
         git checkout 2.0.0;
-        git submodule update --init --remote --recursive;
+        ls;
         cd ..;
-        
+        git submodule update --init --remote --recursive;
 
     - name: PicoTool
       run: |
@@ -53,6 +53,7 @@ jobs:
         echo $PICO_TOOLCHAIN_PATH
         cd picotool;
         git checkout 2.0.0;
+        git submodule update --init lib/mbedtls
         mkdir build;
         cd build;
         cmake ..;

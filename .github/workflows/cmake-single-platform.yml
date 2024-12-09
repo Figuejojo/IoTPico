@@ -41,9 +41,11 @@ jobs:
       run: |
         git clone https://github.com/raspberrypi/picotool.git;
         ls;
-        export PICO_SDK_PATH=".\\pico-sdk";
+        export PICO_SDK_PATH="$PWD/pico-sdk";
+        echo $PICO_SDK_PATH
+        export PICO_TOOLCHAIN_PATH="$PWD/picotool";
+        echo PICO_TOOLCHAIN_PATH
         cd picotool;
-        export PICO_TOOLCHAIN_PATH=".\\picotool";
         git checkout 2.0.0;
         mkdir build;
         cd build;

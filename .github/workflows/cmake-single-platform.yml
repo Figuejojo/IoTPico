@@ -34,12 +34,14 @@ jobs:
         sudo apt install pkg-config libusb-1.0-0-dev;
 
     - name: Get-Sub-repos
-      run: git submodule update --init --remote --recursive
+      run: |
+        git submodule update --init --remote --recursive;
+        export PICO_SDK_PATH=".\\pico-sdk" 
 
     - name: PicoTool
       run: |
         git clone https://github.com/raspberrypi/picotool.git;
-        cd picotool
+        cd picotool;
         export PICO_TOOLCHAIN_PATH=".\\picotool";
         git checkout 2.0.0;
         mkdir build;

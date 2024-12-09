@@ -43,7 +43,7 @@ jobs:
         export PICO_SDK_PATH=".\\pico-sdk";
         cd picotool;
         export PICO_TOOLCHAIN_PATH=".\\picotool";
-        git switch 2.0.0;
+        git checkout 2.0.0;
         mkdir build;
         cd build;
         cmake ..;

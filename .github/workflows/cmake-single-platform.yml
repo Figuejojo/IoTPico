@@ -35,6 +35,9 @@ jobs:
 
     - name: Get-Sub-repos
       run: |
+        cd pico-sdk;
+        git checkout 2.0.0;
+        cd ..;
         git submodule update --init --remote --recursive;
 
     - name: PicoTool
@@ -44,7 +47,7 @@ jobs:
         export PICO_SDK_PATH="$PWD/pico-sdk";
         echo $PICO_SDK_PATH
         export PICO_TOOLCHAIN_PATH="$PWD/picotool";
-        echo PICO_TOOLCHAIN_PATH
+        echo $PICO_TOOLCHAIN_PATH
         cd picotool;
         git checkout 2.0.0;
         mkdir build;

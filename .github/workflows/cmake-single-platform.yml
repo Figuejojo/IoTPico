@@ -35,25 +35,25 @@ jobs:
 
     - name: Get-Sub-repos
       run: |
-        ls;
-        git submodule update --init
+        git submodule update --init --remtote --recursive
         cd pico-sdk;
         git switch -c 2.0.0;
-        ls;
+        git submodule sync --recursive;
+        echo "--- TAG --- $PWD ";
         cd ..;
-        git submodule update --init --remote --recursive;
 
     - name: PicoTool
       run: |
         git clone https://github.com/raspberrypi/picotool.git;
         ls;
         export PICO_SDK_PATH="$PWD/pico-sdk";
-        echo $PICO_SDK_PATH
+        echo $PICO_SDK_PATH;
         export PICO_TOOLCHAIN_PATH="$PWD/picotool";
-        echo $PICO_TOOLCHAIN_PATH
+        echo $PICO_TOOLCHAIN_PATH;
         cd picotool;
-        git switch -c 2.0.0;
         git submodule update --init --recursive;
+        git switch -c 2.0.0;
+        git submodule sync --recursive;
         mkdir build;
         cd build;
         cmake ..;
@@ -62,7 +62,7 @@ jobs:
 
     - name: Setup-Build
       run: |
-        ls;
+        echo "--- TAG --- $PWD";
         mkdir build;
         cd build;
         cmake ..;

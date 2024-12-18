@@ -1,74 +1,148 @@
 # IoT Pico
-This project aims to create a IoT project using the Pico W. 
+IoTPico is a modular, scalable, and maintainable development framework for the Raspberry Pi Pico W. It prioritizes a library-centric architecture, enabling core libraries (e.g., sensors, actuators, communication protocols) to be reused across various projects. Utilizing FreeRTOS for multitasking and robust unit testing, IoTPico aims to establish a flexible, testable foundation for diverse IoT projects.
 
-## About the Project 
-This IoT device contains:
-- Raspberry Pi Pico w
-> TBD Sensors
+
+## Available Projects
+- **Sandbox Project**: Sandbox Project: Designed for rapid prototyping and testing of Minimum Viable Products (MVPs).
+- **[New Project Name]** - [Project Description]
 
 # Index
-- [1 About the Project](#PSetup)
-- [2 About the Project](#PSetup)
-- [3 Development Setup](#DevSetup)
-    - [3.1 Dependencies](#Dependencies)
-    - [3.2 Project Configuration](#PConfig)
+- [1 Project File Structure](#PFStruct)
+- [2 Development Setup](#DevSetup)
+    - [2.1 Dependencies](#Dependencies)
+    - [2.2 Project Configuration](#PConfig)
+    - [2.2 Unit Tests](#UTests)
+- [3 Project Structure Details](#PStruct)
+- [4 Adding New Projects ](#NewP)
+- [5 Project Workflow](#PWork)
+- [6 License](#License)
 
-## Project Structure
+---
+
+<a  name="PFStruct"></a>
+# Project Structure
+Below is an overview of the directory structure:
 
 ```
-IoTPico
-├── pico-sdk (Submodule)
-├── main.c
-├── <TBD>
+IoTPico/
+├── libs/                         # Core reusable libraries
+│   ├── sensors/                  # Sensor drivers (e.g., temperature, humidity)
+│   ├── actuators/                # Actuator helpers (e.g., motors, servos)
+│   ├── communication/            # Communication protocols (e.g., I2C, SPI, WiFi)
+│   └── utilities/                # General helpers (e.g., delays, logging)
+│   └── CMakeLists.txt            # Build configuration for libraries
+├── tests/                        # Unit tests to validate libraries
+│   ├── unity/                    # Unity testing framework (submodule)
+│   ├── libs/                     # Tests for each library module
+│   │   ├── test_sensors.c        # Unit tests for sensors
+│   │   ├── test_actuators.c      # Unit tests for actuators
+│   │   ├── test_communication.c  # Unit tests for communication
+│   └── CMakeLists.txt            # Build configuration for tests
+├── projects/                     # Full-scale applications integrating libraries
+│   ├── Sandbox/                  # Fast prototyping and MVPs.
+│   └── .                         # Add new projects using Sandbox as example.
+├── FreeRTOS/                     # FreeRTOS kernel and configuration (submodule)
+├── pico-sdk/                     # pico-SDK for Raspberry Pi Pico W (submodule)
+├── CMakeLists.txt                # Root build configuration
+└── README.md                     # Project documentation
 └── .
 ```
 
 <a  name="DevSetup"></a>
 # Development Setup
 
-The project setup consist on downloading all the project dependencies for development.
-- Install the dependencies. 
-- Cloning the Project repository and pico-SDK.
-- Loading the Submodules.
-- Building the project.
-
 <a  name="Dependencies"></a>
 ## Dependencies
-
-The following links are the direct download link. You can refer to this [link](https://vanhunteradams.com/Pico/Setup/PicoSetup.html) on how to install everything. Or check this [article](https://www.raspberrypi.com/news/raspberry-pi-pico-windows-installer/) from Raspberry Pi, where a windows installer is provided. If you are going to install everything on your own be sure to add all the paths in your environmental variables. 
-- Install [ARM GCC Compiler](https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-win32.exe?rev=29bb46cfa0434fbda93abb33c1d480e6&hash=B2C5AAE07841929A0D0BF460896D6E52s) version 10.3 or check the [compiler versions](https://developer.arm.com/downloads/-/gnu-rm).
-- Install [CMake](https://github.com/Kitware/CMake/releases/download/v3.27.0-rc2/cmake-3.27.0-rc2-windows-x86_64.msi) version 3.27 for Windows x86-64-bits or check the [CMake versions](https://cmake.org/download/).
-- Install [GIT](https://github.com/git-for-windows/git/releases/download/v2.41.0.windows.1/Git-2.41.0-64-bit.exe) version 2.41 for Windows x86-64-bits or check the [git versions](https://git-scm.com/downloads).
-- Install [Visual Studio Code (VSCode)](https://code.visualstudio.com/docs/?dv=win) or check the [VScode Versions](https://code.visualstudio.com/).
-- Install [Python 3](https://www.python.org/ftp/python/3.11.4/python-3.11.4-amd64.exe) Version 3.11.4 for Windows x86-64-bits or check [Python3 versions](https://www.python.org/downloads/).
-- Install [Build Tools for Visual Studio](https://aka.ms/vs/17/release/vs_BuildTools.exe) or check the [Build Tools versions](https://visualstudio.microsoft.com/es/downloads/#build-tools-for-visual-studio-2022). For the Visual Studio Tools you must check C++ Build Tools with the following elements:
-    - MSCV
-    - Windows 10 or 11 SDK (Depending on your computer)
-    - C++ Cmake Tools for Windows
-    - Testing tools core features - Build Tools
-    - C++ AddressSanitizer
+@TODO
 
 <a  name="PConfig"></a>
 ## Project Configuration
 
-First Make sure to have all dependencies installed correctly. If not check the Windows Setup Dependencies section or the references at the end. Then, after everything has been installed correctly do as follows:
-1. Clone the git repository in your desired folder using
-```shell
-> git clone https://github.com/Figuejojo/IoTPico.git
-```
-2. Get all the submodules clone inside the project, and run the following command inside the Smart Air Pollution Monitor Folder created above:
-```shell
-IoTPico> git submodule update --init --recursive
-```
-3. Using the ***Developer Command Prompt for VS ...*** use the commands below to move inside the IoTPico folder, create a build folder, move to inside it, and generate the cmake files.  
-```shell
-IoTPico> mkdir build
-IoTPico> cd build
-IoTPico\build> cmake -G "NMake Makefiles" ..
-IoTPico\build> nmake
-```
-4. Open Visual Studio Code (VSCode) by typing ***code*** from the ***Developer Command Prompt for VS ...*** (Do not confuse it with the normal command console).
-5. Open the Smart Air Pollution Monitor project folder in VSCode
-6. Choose the GCC arm-none-eabi most recent version (10.3.1 when this was written). If it didn't give you the option click where *No kit* is shown below.
-7. Then click the *Build* button to build the project. If you got any issues please refer to the references section.
-8. Finally if it builds correcly you must see a build folder inside the project with a file named: ```IoTPico.uf2```
+### Linux
+1. **Clone Repository**
+
+    Clone the git repository in your desired folder using
+    ```shell
+    git clone https://github.com/Figuejojo/IoTPico.git
+    ```
+2. **Initialize Submodules** 
+
+    Initialize and update all submodules within the project directory by running::
+    ```shell
+    > cd IoTPico
+    IoTPico> git submodule update --init --recursive
+    ```
+3. **Setup build directory**
+
+    Create the build directory and build the project (Linux)
+    ```shell
+    IoTPico> mkdir build
+    IoTPico> cd build
+    IoTPico\build> cmake ..
+    ```
+4. **Build Projects**
+
+    To build all projects, simply run:
+    ```bash
+    make
+     ```
+    To build a specific project, specify its name, for example:
+     ```bash
+     make SandBox
+     ```
+
+<a  name="UTests"></a>
+## Unit Tests
+@Todo
+
+<a  name="PStruct"></a>
+# Project Structure Details
+
+- `libs/` - Core Libraries: 
+
+Contains reusable libraries for sensors, actuators, communication protocols, and utilities. These modules are central to all projects.
+
+- `tests/` - Unit Testing
+
+Contains unit tests for `libs/` modules. It uses the Unity framework (included in the `unity/` folder).
+
+- `project/` - Full-Scale Applications
+
+Real-world applications combining libraries to create complete systems.
+
+## Submodules
+- **`FreeRTOS/`**: FreeRTOS kernel for multitasking.
+- **`pico-sdk/`**: SDK for Pico W development.
+- **`tests/unity/`**: Unit testing framework.
+
+---
+
+<a  name="NewP"></a>
+# Adding new project
+For details, see the README.md file under `projects/` directory.
+
+---
+
+<a  name="PWork"></a>
+# Project Workflow
+
+1. **Create a Ticket**: Open a new GitHub issue, e.g.,  
+   `FEAT-1234: [SB] Add WiFi module support`.
+2. **Create a Branch**: Use the naming convention:  
+   `feature/FEAT-1234`.  
+    **Development**: Work on the ticket and make descriptive commits. Example:  
+    - Commit 1: `FEAT-10: [SB] Add LED Blink Task`
+    - Commit 2: `FEAT-10: [SB] Fix LED One`
+    - Commit 3: `FEAT-10: [SB] Make LED Pattern`
+
+5. **Final Squash Commit**: Before merging, squash all commits into one using the format:  
+   `[TYPE]-[ID] [AreaAbbreviation]: [Short Description] - [More Info]`.
+    In more info list the most important changes and list the commits.
+
+For more details on the workflow and naming conventions, refer to the [Project wiki](https://github.com/Figuejojo/IoTPico/wiki/Project-Git-Ticket,-Branch,-and-Commit-Naming-Conventions). 
+
+---
+
+<a  name="License"></a>
+# License
+This project is distributed under the MIT License. For more details, refer to the LICENSE file.

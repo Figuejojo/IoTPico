@@ -22,6 +22,12 @@
 #include "hardware/uart.h"
 
 /*******************************************************************************
+* Macro Definitions
+*******************************************************************************/
+
+#define MSG_LEN (128)
+
+/*******************************************************************************
 * Type definitions
 *******************************************************************************/
 
@@ -31,11 +37,17 @@
  */
 typedef enum 
 {
-    LOG_LEVEL_DEBUG, /**< Debug log level. */
-    LOG_LEVEL_INFO,  /**< Info log level. */
-    LOG_LEVEL_WARN,  /**< Warning log level. */
-    LOG_LEVEL_ERROR, /**< Error log level. */
-    LOG_LEVEL_FATAL  /**< Fatal log level. */
+    LOG_LEVEL_DEBUG  = 0,  /**< Debug log level.   */
+    LOG_LEVEL_INFO,        /**< Info log level.    */
+    LOG_LEVEL_WARN,        /**< Warning log level. */
+    LOG_LEVEL_ERROR,       /**< Error log level.   */
+    LOG_LEVEL_FATAL,       /**< Fatal log level.   */
+    LOG_LEVEL_END,         /**< End of log levels. */
+
+    // LOG ERRORS
+    LOG_ERR_MSGLEN,  /**< Invalid MSG Len.   */
+    LOG_ERR_INVALID, /**< Invalid Log level. */
+    LOG_ERR_END      /**< End of Log Errors. */
 } log_level_t;
 
 /*******************************************************************************

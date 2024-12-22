@@ -10,8 +10,8 @@ add_executable(SandBox
 pico_sdk_init()
 
 # Enable usb output, disable uart output
-pico_enable_stdio_usb(${PROJECT_NAME} 1)
-pico_enable_stdio_uart(${PROJECT_NAME} 0)
+pico_enable_stdio_usb(${PROJECT_NAME} 0)
+pico_enable_stdio_uart(${PROJECT_NAME} 1)
 
 # Add pico_stdlib library which aggregates commonly used features
 target_link_libraries(SandBox PUBLIC

@@ -55,22 +55,22 @@ void TaskLEDBlinkvoid(void * pvParameters)
     const uint8_t LED_PIN = 3;
     gpio_init(LED_PIN);
     gpio_set_dir(LED_PIN, GPIO_OUT);
-    int8_t msg[4] = "OFF";
+    int8_t msg[4] = "ON";
     uint8_t LedState = 0;
     while(true)
     {
-        log_message(LOG_LEVEL_DEBUG,"Debug: %s/n",msg);
+        log_message(LOG_LEVEL_DEBUG,"Debug: %s",msg);
         vTaskDelay(2500/portTICK_PERIOD_MS);
         gpio_put(LED_PIN,LedState);
         if(LedState == 1)
         {
             LedState = 0;
-            strcpy(msg,"OFF");
+            strcpy(msg,"ON");
         }
         else
         {
             LedState = 1;
-            strcpy(msg,"ON");
+            strcpy(msg,"OFF");
         }
     }
 }

@@ -17,6 +17,7 @@ pico_enable_stdio_uart(${PROJECT_NAME} 0)
 target_link_libraries(SandBox PUBLIC
     pico_stdlib
     freertos
+    Utils
     )
 
 # create map/bin/hex/uf2 file in addition to ELF.

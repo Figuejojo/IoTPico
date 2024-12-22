@@ -23,6 +23,7 @@ set(PICO_BOARD pico_w CACHE STRING "Board type")
 project(PicoIoT ASM CXX C)
 
 add_subdirectory(FreeRTOS freertos)
+add_subdirectory(Libs/Utilities)
 
 # Include Project folders
 add_subdirectory(Projects/SandBox)

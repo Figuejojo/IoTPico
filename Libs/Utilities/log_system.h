@@ -20,6 +20,7 @@
 #include "task.h"
 #include "queue.h"
 #include "hardware/uart.h"
+#include "pico/stdlib.h"
 
 /*******************************************************************************
 * Macro Definitions
@@ -58,8 +59,12 @@ typedef enum
  * @brief Initializes the logging system.
  *
  * Sets up resources such as the queue and UART for output.
+ *
+ * @param uart_inst_t* Pointer to specified UART.
+ * @param pinTX Specify the pin used for TX.
+ * @param pinRX Specify the pin used for RX.
  */
-void log_init(void);
+void log_init(uart_inst_t *pUart, uint8_t pinTX, uint8_t pinRX);
 
 /**
  * @brief The logging task to be run in the RTOS environment.

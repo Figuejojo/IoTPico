@@ -16,7 +16,8 @@
 /*******************************************************************************
 * Static Global Variables
 *******************************************************************************/
-
+#define LOG_TX (0)
+#define LOG_RX (1)
 /*******************************************************************************
 * Function Declaration
 *******************************************************************************/
@@ -34,7 +35,7 @@ int main()
 {
     //*** Hardware Initializations (If needed) ***/
     stdio_init_all();
-    log_init();
+    log_init(uart0,LOG_TX,LOG_RX);
     //*** Queues Creation and setup ***/ 
 
     /*** FreeRTOS tASKS ***/
@@ -59,7 +60,7 @@ void TaskLEDBlinkvoid(void * pvParameters)
     uint8_t LedState = 0;
     while(true)
     {
-        log_message(LOG_LEVEL_DEBUG,"Debug: %s",msg);
+        log_message(LOG_LEVEL_DEBUG,"LED: %s",msg);
         vTaskDelay(2500/portTICK_PERIOD_MS);
         gpio_put(LED_PIN,LedState);
         if(LedState == 1)

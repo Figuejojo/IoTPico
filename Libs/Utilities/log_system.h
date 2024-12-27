@@ -13,14 +13,7 @@
 * Includes
 *******************************************************************************/
 
-#include <stdint.h>
-#include <stdio.h>
-#include <stdarg.h>
-#include "FreeRTOS.h"
-#include "task.h"
-#include "queue.h"
-#include "hardware/uart.h"
-#include "pico/stdlib.h"
+#include "lib_common.h"
 
 /*******************************************************************************
 * Macro Definitions

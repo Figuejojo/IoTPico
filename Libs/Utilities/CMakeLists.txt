@@ -6,7 +6,9 @@ set(Utils_SRC
 
 add_library(Utils ${Utils_SRC})
 
-target_include_directories(Utils PUBLIC .)
+target_include_directories(Utils PUBLIC
+    .
+    ../)
 
 target_link_libraries(Utils PUBLIC
     pico_stdlib 

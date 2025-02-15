@@ -49,10 +49,17 @@ typedef enum ENS_States
 /*@}*/
 }E_ENS_STATES;
 
+/**
+ * @name EnsData_t
+ * @type enum
+ * @brief SEN0515 Sensor structure
+ */
 typedef struct EnsData
 {
+/*@{*/
     float Co2;
     float Tvoc;
+/*@}*/
 }EnsData_t;
 
 /*******************************************************************************

@@ -16,9 +16,9 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include <string.h>
 // Pico Libraries
 #include "pico/stdlib.h"
-#include "hardware/uart.h"
 // RTOS Libraries
 #include "FreeRTOS.h"
 #include "task.h"

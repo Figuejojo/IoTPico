@@ -17,6 +17,7 @@ pico_enable_stdio_uart(${PROJECT_NAME} 1)
 target_link_libraries(SandBox PUBLIC
     pico_stdlib
     freertos
+    Sensors
     Utils
     )
 

@@ -8,6 +8,7 @@
 *******************************************************************************/
 #include "log_system.h"
 #include "SEN0515.h"
+#include "AM2320.h"
 
 /*******************************************************************************
 * Static Global Variables
@@ -36,13 +37,14 @@ int main()
 
     //** Peripherals setup **//
     vSetupSEN0515(ENS_I2C,ENS_I2C1_SDA,ENS_I2C1_SCL);
-
+    vSetupAM2320(AM_I2C,AM_I2C0_SDA,AM_I2C0_SCL);
     //*** Queues Creation and setup ***/ 
 
     /*** FreeRTOS tASKS ***/
     // Lib Tasks
     xTaskCreate(TaskLoggingVoid,"Logging",256,NULL,2,NULL); // Recommended for debugging
-    xTaskCreate(vTaskSEN0515,"AM2320",256,NULL,2,NULL);     // SEN0515 Sensor.
+    xTaskCreate(vTaskSEN0515,"SEN2320",256,NULL,2,NULL);    // SEN0515 Sensor.
+    xTaskCreate(vTaskAM2320,"AM2320",256,NULL,2,NULL);      // AM2320 Sensor.
 
     // Tasks for this project.
     xTaskCreate(vTaskLEDBlinkvoid,"Ledblink",256,NULL,2,NULL);
@@ -67,7 +69,6 @@ void vTaskLEDBlinkvoid(void * pvParameters)
     gpio_init(LED_PIN);
     gpio_set_dir(LED_PIN, GPIO_OUT);
 
-    int8_t msg[4] = "ON";
     uint8_t LedState = 0;
     while(true)
     {
@@ -76,12 +77,10 @@ void vTaskLEDBlinkvoid(void * pvParameters)
         if(LedState == 1)
         {
             LedState = 0;
-            strcpy(msg,"ON");
         }
         else
         {
             LedState = 1;
-            strcpy(msg,"OFF");
         }
     }
 }
@@ -89,16 +88,31 @@ void vTaskLEDBlinkvoid(void * pvParameters)
 void vTaskSensorTest(void * pvParameters)
 {
     EnsData_t SenVal = {0};
+    AmData_t AmVal = {0};
+    uint8_t SenCnt = 0;
     while(true)
     {
-        vTaskDelay(30100/portTICK_PERIOD_MS);
-        if(getSEN0515Val(&SenVal))
+        vTaskDelay(10000/portTICK_PERIOD_MS);
+        SenCnt++;
+        if(SenCnt == 3)
         {
-            log_message(LOG_LEVEL_DEBUG,"Co2: %0.2f \tTVOC: %0.2f",SenVal.Co2,SenVal.Tvoc);
+            if(getSEN0515Val(&SenVal))
+            {
+                log_message(LOG_LEVEL_DEBUG,"Co2: %0.2f \tTVOC: %0.2f",SenVal.Co2,SenVal.Tvoc);
+            }
+            else
+            {
+                log_message(LOG_LEVEL_WARN,"SEN0515 is not Updating");
+            }
+            SenCnt = 0;
+        }
+        if(geAM2320Val(&AmVal))
+        {
+            log_message(LOG_LEVEL_DEBUG,"Temp: %0.2f \tHum: %0.2f",AmVal.Temp,AmVal.Hum);
         }
         else
         {
-            log_message(LOG_LEVEL_WARN,"Sensor is not Updating");
+            log_message(LOG_LEVEL_WARN,"AM2320 is not Updating");
         }
     }
 }

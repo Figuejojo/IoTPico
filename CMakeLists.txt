@@ -14,16 +14,20 @@ endif()
 # ====================================================================================
 cmake_minimum_required(VERSION 3.13)
 
-# initialize the SDK directly
-set(PICO_SDK_PATH "..\\pico-sdk") 
-include(pico_sdk_import.cmake)
-
 set(PICO_BOARD pico_w CACHE STRING "Board type")
+# initialize the SDK directly.
+set(PICO_SDK_PATH "..\\pico-sdk")
+
+include(pico_sdk_import.cmake)
 
 project(PicoIoT ASM CXX C)
 
+# FreeRTOS Folder.
 add_subdirectory(FreeRTOS freertos)
-add_subdirectory(Libs/Utilities)
 
-# Include Project folders
+# Custom Project Libs.
+add_subdirectory(Libs/Utilities)
+add_subdirectory(Libs/Sensors)
+
+# Include Project folders.
 add_subdirectory(Projects/SandBox)

@@ -6,23 +6,19 @@
 /*******************************************************************************
 * Includes
 *******************************************************************************/
-#include <stdio.h>
-#include <FreeRTOS.h>
-#include <task.h>
-#include "pico/stdlib.h"
-#include <string.h>
 #include "log_system.h"
+#include "SEN0515.h"
 
 /*******************************************************************************
 * Static Global Variables
 *******************************************************************************/
-#define LOG_TX (0)
-#define LOG_RX (1)
+
+
 /*******************************************************************************
 * Function Declaration
 *******************************************************************************/
-void TaskLEDBlinkvoid(void * pvParameters);
-
+void vTaskLEDBlinkvoid(void * pvParameters);
+void vTaskSensorTest(void * pvParameters);
 /*******************************************************************************
 * Function Definition
 *******************************************************************************/
@@ -36,12 +32,24 @@ int main()
     //*** Hardware Initializations (If needed) ***/
     stdio_init_all();
     log_init(uart0,LOG_TX,LOG_RX);
+    log_message(LOG_LEVEL_DEBUG,"Starting...");
+
+    //** Peripherals setup **//
+    vSetupSEN0515(ENS_I2C,ENS_I2C1_SDA,ENS_I2C1_SCL);
+
     //*** Queues Creation and setup ***/ 
 
     /*** FreeRTOS tASKS ***/
-    xTaskCreate(TaskLEDBlinkvoid,"Ledblink",256,NULL,2,NULL);
-    xTaskCreate(TaskLoggingVoid,"Logging",256,NULL,2,NULL);
+    // Lib Tasks
+    xTaskCreate(TaskLoggingVoid,"Logging",256,NULL,2,NULL); // Recommended for debugging
+    xTaskCreate(vTaskSEN0515,"AM2320",256,NULL,2,NULL);     // SEN0515 Sensor.
+
+    // Tasks for this project.
+    xTaskCreate(vTaskLEDBlinkvoid,"Ledblink",256,NULL,2,NULL);
+    xTaskCreate(vTaskSensorTest,"SensorTest",256,NULL,2,NULL);
+
     /*Start FreeRTOS Scheduler */
+    log_message(LOG_LEVEL_DEBUG,"FreeRTOS Boot-up");
     vTaskStartScheduler();
     
     while(1);
@@ -51,17 +59,19 @@ int main()
  * @name Debug_LEDBlink 
  * @Type Example Task
 */
-void TaskLEDBlinkvoid(void * pvParameters)
+void vTaskLEDBlinkvoid(void * pvParameters)
 {
     const uint8_t LED_PIN = 3;
+
+    //Ideally these gpio functions should be in a the peripheral setup
     gpio_init(LED_PIN);
     gpio_set_dir(LED_PIN, GPIO_OUT);
+
     int8_t msg[4] = "ON";
     uint8_t LedState = 0;
     while(true)
     {
-        log_message(LOG_LEVEL_DEBUG,"LED: %s",msg);
-        vTaskDelay(2500/portTICK_PERIOD_MS);
+        vTaskDelay(2000/portTICK_PERIOD_MS);
         gpio_put(LED_PIN,LedState);
         if(LedState == 1)
         {
@@ -72,6 +82,23 @@ void TaskLEDBlinkvoid(void * pvParameters)
         {
             LedState = 1;
             strcpy(msg,"OFF");
+        }
+    }
+}
+
+void vTaskSensorTest(void * pvParameters)
+{
+    EnsData_t SenVal = {0};
+    while(true)
+    {
+        vTaskDelay(30100/portTICK_PERIOD_MS);
+        if(getSEN0515Val(&SenVal))
+        {
+            log_message(LOG_LEVEL_DEBUG,"Co2: %0.2f \tTVOC: %0.2f",SenVal.Co2,SenVal.Tvoc);
+        }
+        else
+        {
+            log_message(LOG_LEVEL_WARN,"Sensor is not Updating");
         }
     }
 }

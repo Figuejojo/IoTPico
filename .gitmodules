@@ -4,3 +4,6 @@
 [submodule "FreeRTOS/FreeRTOS-Kernel"]
 	path = FreeRTOS/FreeRTOS-Kernel
 	url = https://github.com/FreeRTOS/FreeRTOS-Kernel.git
+[submodule "tests/Unity"]
+	path = tests/Unity
+	url = https://github.com/ThrowTheSwitch/Unity.git

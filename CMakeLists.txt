@@ -31,3 +31,8 @@ add_subdirectory(Libs/Sensors)
 
 # Include Project folders.
 add_subdirectory(Projects/SandBox)
+
+enable_testing()
+
+# Include Unit Test folders.
+add_subdirectory(tests)

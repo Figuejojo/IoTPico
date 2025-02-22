@@ -54,13 +54,12 @@ void vTaskAM2320(void * pvParameters)
 {
     const uint8_t readCmd[] = {0x03,0x00,0x04};
     const uint8_t wakeCmd = 0x00;
-    uint16_t CRC = 0;
-    int state = PICO_OK;
+    uint8_t msg = {0};
     AmData_t sAM = {0};
     while(true)
     {
         uint8_t cbuff[8] = {0};
-        state = PICO_OK;
+        int state = PICO_OK;
         taskENTER_CRITICAL();
         // Wake-up device
         i2c_write_blocking(AM_I2C,AM_ADR,&wakeCmd,1,true);
@@ -72,7 +71,7 @@ void vTaskAM2320(void * pvParameters)
 
         if(PICO_OK <= state)
         {
-            CRC = cbuff[7]<<8|cbuff[6];
+            uint16_t CRC = cbuff[7]<<8|cbuff[6];
             if(CRC == bCheckCRC16(cbuff,sizeof(cbuff)-2))
             {
                 sAM.Hum = (cbuff[2]<<8|cbuff[3])/10.0;

@@ -23,7 +23,7 @@ static QueueHandle_t sgqAm2320Data; /*!< SensorData FreeRTOS Queue */
  *  @param  Void
  *  @return 16bit CRC calculation 
  */
-static uint16_t bCheckCRC16(uint8_t * ptrBuff, uint8_t lenBuff);
+static uint16_t bCheckCRC16(const uint8_t * ptrBuff, uint8_t lenBuff);
 
 /*******************************************************************************
 * Function Definition
@@ -54,13 +54,11 @@ void vTaskAM2320(void * pvParameters)
 {
     const uint8_t readCmd[] = {0x03,0x00,0x04};
     const uint8_t wakeCmd = 0x00;
-    uint16_t CRC = 0;
-    int state = PICO_OK;
     AmData_t sAM = {0};
     while(true)
     {
         uint8_t cbuff[8] = {0};
-        state = PICO_OK;
+        int state = PICO_OK;
         taskENTER_CRITICAL();
         // Wake-up device
         i2c_write_blocking(AM_I2C,AM_ADR,&wakeCmd,1,true);
@@ -72,7 +70,7 @@ void vTaskAM2320(void * pvParameters)
 
         if(PICO_OK <= state)
         {
-            CRC = cbuff[7]<<8|cbuff[6];
+            uint16_t CRC = cbuff[7]<<8|cbuff[6];
             if(CRC == bCheckCRC16(cbuff,sizeof(cbuff)-2))
             {
                 sAM.Hum = (cbuff[2]<<8|cbuff[3])/10.0;
@@ -101,7 +99,7 @@ void vSetupAM2320(i2c_inst_t * nI2C, uint8_t pinSDA, uint8_t pinSDL)
     sgqAm2320Data = xQueueCreate(AM_QUEUE_SZ, sizeof(AmData_t));
 }
 
-static uint16_t bCheckCRC16(uint8_t * ptrBuff, uint8_t lenBuff)
+static uint16_t bCheckCRC16(const uint8_t * ptrBuff, uint8_t lenBuff)
 {
     uint16_t crc = 0xFFFF;
     uint8_t sizeBuff = lenBuff;

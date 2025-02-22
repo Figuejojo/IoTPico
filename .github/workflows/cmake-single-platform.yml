@@ -59,9 +59,9 @@ jobs:
         mkdir build;
         cd build;
         cmake ..;
-        make
+        make -j4
       
     - name: Static-Code-Analysis
       run: |
-        cppcheck --enable=all ./Libs/ ./Projects/SandBox/ -I ./Libs/ -I ./Libs/Utilities/ -I ./Libs/Sensors/ -I ./Projects/SandBox/ --suppressions-list=./cCheckSupress.txt -q
+        cppcheck --enable=all ./Libs/ ./Projects/SandBox/ -I ./Libs/ -I ./Libs/Utilities/ -I ./Libs/Sensors/ -I ./Projects/SandBox/ --suppressions-list=./cCheckSupress.txt -q --error-exitcode=1
 

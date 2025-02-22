@@ -43,6 +43,16 @@ Follow these steps to add and configure a new project within the `IoTPico` repos
      make SandBox
      ```
 
+6. ** Static Code Analysis **
+  - Add the folders to ```.github/workflows/cmake-single-platform.yml``` 
+  - Use ```./Projects/<NewProject>``` to add and check all C files.
+  - Use ```-I ./Projects/<NewProject>``` for any new directories containing header files.
+
+All new directories within NewProject that contain header files must be included using:
+```
+-I ./Projects/<NewProject>/<dir>
+```  
+  
 ---
 
 ## Notes

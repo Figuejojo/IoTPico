@@ -63,5 +63,5 @@ jobs:
       
     - name: Static-Code-Analysis
       run: |
-        cppcheck --enable=warning,style,performance,portability,unusedFunction ./Libs/ ./Projects/SandBox/ -I ./Libs/ -I ./Libs/Utilities/ -I ./Libs/Sensors/ -I ./Projects/SandBox/ --suppressions-list=./cCheckSupress.txt --error-exitcode=1
+        cppcheck --enable=warning,style,performance,portability,unusedFunction ./Libs/ ./Projects/SandBox/ -I ./Libs/ -I ./Libs/Utilities/ -I ./Libs/Sensors/ -I ./Projects/SandBox/ --error-exitcode=1
 

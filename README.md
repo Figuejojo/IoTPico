@@ -15,7 +15,8 @@ IoTPico is a modular, scalable, and maintainable development framework for the R
 - [3 Project Structure Details](#PStruct)
 - [4 Adding New Projects ](#NewP)
 - [5 Project Workflow](#PWork)
-- [6 License](#License)
+- [6 Static Code Analysis](#SA)
+- [7 License](#License)
 
 ---
 
@@ -144,13 +145,14 @@ For details, see the README.md file under `projects/` directory.
 
 For more details on the workflow and naming conventions, refer to the [Project wiki](https://github.com/Figuejojo/IoTPico/wiki/Project-Git-Ticket,-Branch,-and-Commit-Naming-Conventions). 
 
+<a  name="SA"></a>
 # Static Code Analysis
 If a new file or folder is created, make sure to add it to the static analysis so it is checked whenever a pull request is made.
   - Add the new files to ```.github/workflows/cmake-single-platform.yml``` 
   - Use ```./<Dir>``` to add and check all the C file.
   - Use ```-I ./<Dir>``` for any new directories with header files.
 
-## Running Static Code analyusis locally
+## Running Static Code analysis locally
 Run the static code analysis locally using the ```cppcheck``` command from ```cmake-single-platform.yml``` or execute as the following example.
 
 **Checking Only Sandbox Project:**

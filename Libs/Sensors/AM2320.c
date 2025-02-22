@@ -23,7 +23,7 @@ static QueueHandle_t sgqAm2320Data; /*!< SensorData FreeRTOS Queue */
  *  @param  Void
  *  @return 16bit CRC calculation 
  */
-static uint16_t bCheckCRC16(uint8_t * ptrBuff, uint8_t lenBuff);
+static uint16_t bCheckCRC16(const uint8_t * ptrBuff, uint8_t lenBuff);
 
 /*******************************************************************************
 * Function Definition
@@ -54,7 +54,6 @@ void vTaskAM2320(void * pvParameters)
 {
     const uint8_t readCmd[] = {0x03,0x00,0x04};
     const uint8_t wakeCmd = 0x00;
-    uint8_t msg = {0};
     AmData_t sAM = {0};
     while(true)
     {
@@ -100,7 +99,7 @@ void vSetupAM2320(i2c_inst_t * nI2C, uint8_t pinSDA, uint8_t pinSDL)
     sgqAm2320Data = xQueueCreate(AM_QUEUE_SZ, sizeof(AmData_t));
 }
 
-static uint16_t bCheckCRC16(uint8_t * ptrBuff, uint8_t lenBuff)
+static uint16_t bCheckCRC16(const uint8_t * ptrBuff, uint8_t lenBuff)
 {
     uint16_t crc = 0xFFFF;
     uint8_t sizeBuff = lenBuff;

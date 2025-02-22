@@ -190,7 +190,6 @@ E_ENS_STATES eCheckEnsST(void)
     uint8_t const DScmd = ENS_DATA_S;   // ENS Status.
     uint8_t const OPcmd[2] = {ENS_OPM_MD,ENS_OPM_NOR}; //Opeation state
     uint8_t cBuff[2] = {0};
-    uint8_t msg[25];
     int state = PICO_OK;
 
     taskENTER_CRITICAL();
